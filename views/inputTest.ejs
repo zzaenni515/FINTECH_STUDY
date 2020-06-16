@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+    <input type="text" id="userId"/><br>
+    <input type="text" id="userPassword"/>
+    <button id="loginBtn">login</button>
+</body>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.js"
+  integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+  crossorigin="anonymous"></script>
+<script>
+    console.log('test')
+    $("#loginBtn").click(function(){
+        // alert('hello');
+        var userId = $("#userId").val();
+        var userPassword = $("#userPassword").val();
+        console.log('사용자 입력값은 : ',userId, userPassword);
+    })
+</script>
+</html>

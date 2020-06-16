@@ -20,4 +20,8 @@ app.get('/test3', function (req, res) {
     res.render('test2')
 })
 
+app.get('/inputTest', function(req, res){
+    res.render('inputTest');
+})
+
 app.listen(3000)
