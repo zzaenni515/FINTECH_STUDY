@@ -12,4 +12,12 @@ app.get('/test', function (req, res) {
     res.send('안녕하세요 express 프레임 워크입니다.')
   })
 
+app.get('/test2', function (req, res) {
+    res.render('test')
+  })
+
+app.get('/test3', function (req, res) {
+    res.render('test2')
+})
+
 app.listen(3000)
