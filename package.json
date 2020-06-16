@@ -18,5 +18,8 @@
     "url": "https://github.com/zzaenni515/FINTECH/issues"
   },
   "homepage": "https://github.com/zzaenni515/FINTECH#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  },
   "description": ""
 }
