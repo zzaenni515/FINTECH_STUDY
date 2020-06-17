@@ -14,4 +14,9 @@ app.get('/design', function(req, res){
     res.render('wallet');
 })
 
+//회원가입페이지
+app.get('/signup', function(req, res){
+    res.render('signup');
+})
+
 app.listen(3000)
