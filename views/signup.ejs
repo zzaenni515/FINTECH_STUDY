@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
 	<title>Crypto Mobile Template</title>
-
 	<!-- Google font file. If you want you can change. -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,900" rel="stylesheet">
-
 	<!-- Fontawesome font file css -->
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-
 	<!-- Template global css file. Requared all pages -->
 	<link rel="stylesheet" type="text/css" href="css/global.style.css">
 </head>
-
 <body>
-	
 	<div class="wrapper">
 		<div class="nav-menu">
 			<nav class="menu">
-				
 				<!-- Menu navigation start -->
 				<div class="nav-container">
 					<ul class="main-menu">
@@ -54,7 +47,6 @@
 								<li><a href="forgot-password.html" data-loader="show">Forgot Password</a></li>
 							</ul>
 						</li>
-						
 						<li>
 							<a href="javascript:void(0);"><img src="img/content/icons/8.png" alt=""> <strong>Wizards</strong> <span class="fa fa-angle-down"></span></a>
 							<ul>
@@ -110,59 +102,49 @@
 			<main>
 				<div class="container">
 					<div class="form-divider"></div>
-
 					<div class="form-divider"></div>
-
 					<div class="form-row-group with-icons">
 						<div class="form-row no-padding">
 							<i class="fa fa-user"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="이름">
+							<input type="text" id="userName" name="aaa" class="form-element" placeholder="이름">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-envelope"></i>
-							<input type="email" name="aaa" class="form-element" placeholder="Email">
+							<input type="email" id="userEmail" name="aaa" class="form-element" placeholder="Email">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-lock"></i>
-							<input type="password" name="aaa" class="form-element" placeholder="비밀번호">
+							<input type="password" id="userPassword" name="aaa" class="form-element" placeholder="비밀번호">
                         </div>
                         <div class="form-row no-padding">
 							<i class="fa fa-user"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="accesstoken">
+							<input type="text" id="userAccessToken" name="aaa" class="form-element" placeholder="accesstoken">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-user"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="refreshtoken">
+							<input type="text" id="userRefreshToken" name="aaa" class="form-element" placeholder="refreshtoken">
 						</div>
 						<div class="form-row no-padding">
 							<i class="fa fa-user"></i>
-							<input type="text" name="aaa" class="form-element" placeholder="userseqno">
+							<input type="text" id="userSeqNo" name="aaa" class="form-element" placeholder="userseqno">
 						</div>
 					</div>
-
 					<div class="form-divider"></div>
-
                     <div class="form-row">
-						<button type="button" class="button circle block orange">인증받기</button>
+						<button type="button" id="authBtn" class="button circle block orange">인증받기</button>
 					</div>
-
                     <div class="form-divider"></div>
-
                     <div class="form-row">
-						<button type="button" class="button circle block orange">가입하기</button>
+						<button type="button" id="signupBtn" class="button circle block orange">가입하기</button>
 					</div>
-
 					<div class="form-row txt-center mt-15">
 						Already have an account? <a href="login.html" data-loader="show">Login</a>
 					</div>
-
 				</div>
 			</main>
 			<!-- Page content end -->
 		</div>
 	</div>
-
-
 	<!--Page loader DOM Elements. Requared all pages-->
 	<div class="sweet-loader">
 		<div class="box">
@@ -171,14 +153,15 @@
 		  	<div class="circle3"></div>
 		</div>
 	</div>
-
 	<!-- JQuery library file. requared all pages -->
 	<script src="js/jquery-3.2.1.min.js"></script>
-
 	<!-- Template global script file. requared all pages -->
 	<script src="js/global.script.js"></script>
-
-	
+    <script>
+        $("#authBtn").click(function(){
+            var tmpWindow = window.open('about:blank')
+            tmpWindow.location = "https://testapi.openbanking.or.kr/oauth/2.0/authorize?response_type=code&client_id=q7kH44ThJwjpvNRg0BbJvE1yxvx5X53DKz1rNgPF&redirect_uri=http://localhost:3000/authResult&scope=login inquiry transfer&state=12345678901234567890123456789012&auth_type=0"
+        })
+    </script>
 </body>
-
 </html>
