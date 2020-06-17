@@ -164,7 +164,31 @@
 			+"client_id=MTjFQJ2tkHnPNTWfOSi3p1oiIF1BZ9WE0I2HW6RQ&"
 			+"redirect_uri=http://localhost:3000/authResult&scope=login inquiry "
 			+"transfer&state=12345678901234567890123456789012&auth_type=0"
-        })
+		})
+		$("#signupBtn").click(function(){
+			var userName = $("#userName").val();
+			var userEmail = $("#userEmail").val();
+			var userPassword = $("userPassword").val();
+			var userAccessTocken = $("#userAccessToken").val();
+			var userRefreshTocken = $("#userRefreshToken").val();
+			var userSeqNo = $("#userSeqNo").val();
+
+			$.ajax({
+				url : '/signup',
+				type : 'POST',
+				data : {
+					userName : userName,
+					userEmail : userEmail,
+					userPassword : userPassword,
+					userAccessTocken : userAccessTocken,
+					userRefreshTocken : userRefreshTocken,
+					userSeqNo : userSeqNo
+				},
+				success : function(data){
+					alert(data);
+				}
+			})
+		})
     </script>
 </body>
 </html>
