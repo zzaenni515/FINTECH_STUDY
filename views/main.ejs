@@ -279,6 +279,11 @@
 
     <script>
         var jwtToken = sessionStorage.getItem('ourToken')
+        console.log(jwtToken);
+        if(jwtToken == null){
+            alert("로그인해주세요");
+            window.location.href = '/login'
+        }
         fetchUserData();
         function fetchUserData(){
             $.ajax({

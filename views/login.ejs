@@ -185,7 +185,8 @@
                         aleart(data);
                     }
                     else{
-                        sessionStorage.setItem('ourToken', data);
+						sessionStorage.setItem('ourToken', data);
+						window.location.href = '/main';
                     }
 				}
        		})
