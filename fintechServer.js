@@ -40,6 +40,10 @@ app.get('/main', function(req, res){
     res.render('main');
 })
 
+app.get('/balance', function(req, res){
+    res.render('balance');
+})
+
 app.post('/login',function(req, res){
     console.log(req.body);
     var userEmail = req.body.userEmail;
@@ -154,8 +158,53 @@ app.post('/list', auth, function(req, res){
     
 })
 
-app.get('/authTest', auth, function(req, res){
-    res.json(req.decoded);
+app.post('/balance', auth, function(req, res){
+    var finusenum = req.body.fin_use_num;
+    var countnum = Math.floor(Math.random() * 1000000000) + 1;
+    var transId = "T991637160U" + countnum; //이용기관번호 본인것 입력
+    var transDtime = '20200618133507';
+    //database 조회
+    //=> 잔액조회 request 요청
+    var userId = req.decoded.userId;
+    var sql = "SELECT * FROM user WHERE id = ?";
+
+    connection.query(sql, [userId], function (err, result){
+        if(err) throw err;
+
+        var accesstoken = result[0].accesstoken;
+        var userseqno = result[0].userseqno;
+        var balanceamt = result[0].balance_amt;
+        console.log(accesstoken, userseqno, balanceamt);
+
+        var option = {
+            method : "GET",
+            url : "https://testapi.openbanking.or.kr/v2.0/account/balance/fin_num",
+            headers : {
+                'Authorization' : 'Bearer ' + accesstoken
+            },
+            qs : {
+                fintech_use_num : finusenum,
+                bank_tran_id : transId,
+                tran_dtime : transDtime
+            }
+        }
+        request(option, function(error, response, body){
+            if(err){
+                console.error(err);
+                throw err;
+            }
+            else{
+                console.log(body);
+                var requestResultJSON = JSON.parse(body);
+                res.json(requestResultJSON)
+            }
+        });
+    })
+
 })
+
+// app.get('/authTest', auth, function(req, res){
+//     res.json(req.decoded);
+// })
 
 app.listen(3000)
