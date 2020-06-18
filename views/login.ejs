@@ -181,7 +181,12 @@
                     userPassword : userPassword,
                 },
 				success:function(data){
-					alert(data);
+                    if(data == '패스워드가 다릅니다.' || data == '사용자가 없습니다.'){
+                        aleart(data);
+                    }
+                    else{
+                        sessionStorage.setItem('ourToken', data);
+                    }
 				}
        		})
 
