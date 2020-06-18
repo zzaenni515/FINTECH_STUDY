@@ -3,6 +3,16 @@ const app = express()
 const path = require('path');
 const request = require('request');
 
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '930515',
+  database : 'fintech'
+});
+
+connection.connect();
+
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
@@ -18,6 +28,14 @@ app.get('/design', function(req, res){
 //회원가입페이지
 app.get('/signup', function(req, res){
     res.render('signup');
+})
+
+app.get('/login', function(req, res){
+    res.render('login');
+})
+
+app.post('/login',function(req, res){
+    console.log(req.body);
 })
 
 app.get('/authResult', function(req, res){
@@ -42,11 +60,11 @@ app.get('/authResult', function(req, res){
         console.log(body);
         var requestResultJSON = JSON.parse(body);
         res.render('resultChild',{data : requestResultJSON})
-    })
+    });
 })
 
 app.post('/signup', function(req, res){
-    res.send('Post!!!!!!!');
+    //ßßres.send('Post!!!!!!!');
     var userName = req.body.userName;
     var userEmail = req.body.userEmail;
     var userPassword = req.body.userPassword;
@@ -54,6 +72,11 @@ app.post('/signup', function(req, res){
     var userRefreshToken = req.body.userRefreshToken;
     var userSeqNo = req.body.userSeqNo;
     console.log(userAccessToken, userRefreshToken, userSeqNo);
+    var sql = "INSERT INTO fintech.user (name, email, password, accesstoken, refreshtoken, userseqno) VALUES (?, ?, ?, ?, ?, ?)"
+    connection.query(sql,[userName, userEmail, userPassword, userAccessToken, userRefreshToken, userSeqNo], function(error, results, fields){
+        if(error) throw error;
+        res.json('가입완료');
+    });
 })
 
 app.listen(3000)
