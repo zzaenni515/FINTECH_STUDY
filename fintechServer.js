@@ -31,9 +31,13 @@ app.get('/design', function(req, res){
 app.get('/signup', function(req, res){
     res.render('signup');
 })
-
+//로그인페이지
 app.get('/login', function(req, res){
     res.render('login');
+})
+//메인페이지
+app.get('/main', function(req, res){
+    res.render('main');
 })
 
 app.post('/login',function(req, res){
@@ -117,6 +121,24 @@ app.post('/signup', function(req, res){
     connection.query(sql,[userName, userEmail, userPassword, userAccessToken, userRefreshToken, userSeqNo], function(error, results, fields){
         if(error) throw error;
         res.json('가입완료');
+    });
+})
+
+app.post('/list', function(req, res){
+    var option = {
+        method : "GET",
+        url : "https://testapi.openbanking.or.kr/v2.0/user/me",
+        headers : {
+            'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAwNzU5ODc2Iiwic2NvcGUiOlsiaW5xdWlyeSIsImxvZ2luIiwidHJhbnNmZXIiXSwiaXNzIjoiaHR0cHM6Ly93d3cub3BlbmJhbmtpbmcub3Iua3IiLCJleHAiOjE2MDAyMzA5MDcsImp0aSI6IjBhYTVlYTJjLTU0MmQtNDA4YS05MmRjLTUwNjBkODU0MmU2ZCJ9.4c8T13ZSRLma6vhOmq_YQWh4WZy18OPS8pfoLs1FuNw'
+        },
+        qs : {
+            user_seq_no : '1100759876'
+        }
+    }
+    request(option, function(error, response, body){
+        console.log(body);
+        var requestResultJSON = JSON.parse(body);
+        res.json(requestResultJSON)
     });
 })
 
