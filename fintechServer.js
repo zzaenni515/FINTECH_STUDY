@@ -1,7 +1,8 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 const path = require('path');
 const request = require('request');
+const jwt = require('jsonwebtoken');
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -36,6 +37,44 @@ app.get('/login', function(req, res){
 
 app.post('/login',function(req, res){
     console.log(req.body);
+    var userEmail = req.body.userEmail;
+    var userPassword = req.body.userPassword;
+
+    var sql = "SELECT * FROM fintech.user WHERE email = ?"
+    connection.query(sql, [userEmail], function(error, result){
+        if(error) throw error;
+        //console.log(result);
+        if(result.length == 0){
+            res.json('사용자가 없습니다.');
+        }
+        else{
+            var dbPassword = result[0].password;
+            console.log('DataBase Password : ', dbPassword);
+            if(dbPassword == userPassword){
+                console.log('Login 성공!');
+                //JWT 발급
+                jwt.sign(
+                    {
+                        userId : result[0].userId,
+                        userName : result[0].userName
+                    },  //payload
+                    'f%intech#service!1234#',
+                    {
+                        expiresIn : '1d',
+                        issuer : 'fintech.admin',
+                        subject : 'user.login.info'
+                    },
+                    function(err, token){
+                        console.log('우리가 발급한 토큰', token);
+                        res.json(token);
+                    }
+                );
+            }
+            else if(dbPassword != userPassword){
+                res.json('패스워드가 다릅니다.');
+            }
+        }
+    })
 })
 
 app.get('/authResult', function(req, res){
