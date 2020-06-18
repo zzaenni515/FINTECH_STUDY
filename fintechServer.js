@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const request = require('request');
 const jwt = require('jsonwebtoken');
+const auth = require('./lib/auth');
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -48,6 +49,7 @@ app.post('/login',function(req, res){
             res.json('사용자가 없습니다.');
         }
         else{
+            console.log(result[0].userAccessToken);
             var dbPassword = result[0].password;
             console.log('DataBase Password : ', dbPassword);
             if(dbPassword == userPassword){
@@ -55,8 +57,8 @@ app.post('/login',function(req, res){
                 //JWT 발급
                 jwt.sign(
                     {
-                        userId : result[0].userId,
-                        userName : result[0].userName
+                        userId : result[0].id,
+                        userName : result[0].name
                     },  //payload
                     'f%intech#service!1234#',
                     {
@@ -116,6 +118,10 @@ app.post('/signup', function(req, res){
         if(error) throw error;
         res.json('가입완료');
     });
+})
+
+app.get('/authTest', auth, function(req, res){
+    res.json(req.decoded);
 })
 
 app.listen(3000)
