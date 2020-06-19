@@ -48,6 +48,10 @@ app.get('/qrcode', function(req, res){
     res.render('qrcode');
 })
 
+app.get('/qr', function(req, res){
+    res.render('qrReader');
+})
+
 app.post('/login',function(req, res){
     console.log(req.body);
     var userEmail = req.body.userEmail;
